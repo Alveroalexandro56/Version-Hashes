@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Version Download</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        input {
+            padding: 10px;
+            width: 300px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px;
+            cursor: pointer;
+        }
+        #message {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h2>Enter Version Hash to Download</h2>
+    <input type="text" id="versionHash" placeholder="Enter version hash...">
+    <button onclick="checkVersion()">Download</button>
+    <p id="message"></p>
+
+    <script>
+        const firstVersionHash = "Y7TiVy1EWRWeOgJBOForpEN5r";
+
+        function checkVersion() {
+            const userHash = document.getElementById("versionHash").value;
+            const message = document.getElementById("message");
+            
+            if (userHash === firstVersionHash) {
+                message.innerHTML = "✅ Valid version hash! Download starting...";
+                // Replace with actual download logic
+            } else {
+                message.innerHTML = "❌ Invalid version hash! Please try again.";
+            }
+        }
+    </script>
+</body>
+</html>
