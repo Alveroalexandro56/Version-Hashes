@@ -86,6 +86,29 @@
         li {
             margin: 10px 0;
         }
+        .posts-section {
+            margin-top: 30px;
+            text-align: left;
+        }
+        .post {
+            background-color: #e9ecef;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        .post input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        .post button {
+            padding: 8px 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
@@ -103,6 +126,15 @@
                 <li><strong>crv</strong>: <a href="https://www.roblox.com/download/client?os=win" target="_blank">Roblox Download</a></li>
                 <li><strong>xenoexec</strong>: <a href="https://github.com/Alveroalexandro56/Version-Hash-Download/releases/tag/XenoExec" target="_blank">XenoExec Release</a></li>
             </ul>
+        </div>
+
+        <div id="postsSection" class="posts-section" style="display:none;">
+            <h3>Posts</h3>
+            <div id="postsList"></div>
+            <div class="post">
+                <input type="text" id="newPost" placeholder="Write your post...">
+                <button onclick="addPost()">Post</button>
+            </div>
         </div>
     </div>
 
@@ -126,14 +158,23 @@
             }
         };
 
+        let posts = [];
+
         function performAction() {
             const userHash = document.getElementById("hash").value;
             const messageElement = document.getElementById("message");
             const guide = document.getElementById("guide");
+            const postsSection = document.getElementById("postsSection");
 
             if (userHash === "guide") {
                 messageElement.innerHTML = "✅ Valid hash! Displaying guide...";
                 guide.style.display = "block";
+                postsSection.style.display = "none";
+            } else if (userHash === "posts") {
+                messageElement.innerHTML = "✅ Valid hash! Displaying posts section...";
+                guide.style.display = "none";
+                postsSection.style.display = "block";
+                displayPosts();
             } else if (hashMap[userHash]) {
                 messageElement.innerHTML = hashMap[userHash].message;
                 setTimeout(() => {
@@ -143,7 +184,30 @@
                 messageElement.innerHTML = "❌ Invalid hash! Please try again.";
                 messageElement.classList.add("error");
                 guide.style.display = "none";
+                postsSection.style.display = "none";
             }
+        }
+
+        function addPost() {
+            const newPostInput = document.getElementById("newPost");
+            const newPost = newPostInput.value.trim();
+
+            if (newPost) {
+                posts.push({ name: "Anonymous", content: newPost });
+                newPostInput.value = "";
+                displayPosts();
+            }
+        }
+
+        function displayPosts() {
+            const postsList = document.getElementById("postsList");
+            postsList.innerHTML = "";
+            posts.forEach(post => {
+                const postElement = document.createElement("div");
+                postElement.classList.add("post");
+                postElement.innerHTML = `<strong>${post.name}</strong>: ${post.content}`;
+                postsList.appendChild(postElement);
+            });
         }
     </script>
 </body>
